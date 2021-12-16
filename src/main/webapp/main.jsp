@@ -7,6 +7,11 @@
 <title>Main Page :: Dynamic :: AccessInfo</title>
 </head>
 <body>
-	<h1>로그인 나이스</h1>
+	<h1>${accessInfo}</h1>
+	<form action="AccessOut" method="post"> 
+		<input type="submit" value="로그아웃"/>
+		<input type="hidden" name="seCode" value="${seCode}"/>
+		<input type="hidden" name="emCode" value="${emCode}"/>
+	</form>
 </body>
 </html>
