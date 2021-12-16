@@ -84,6 +84,7 @@ public class Authentication {
 		/*test*/
 		list= new ArrayList<Employee>();
 		list.add(emp);
+		System.out.println(emp.getSecode()+emp.getEmcode());
 		
 			this.action.setRedirect(true);
 			this.action.setPage("index.html");
