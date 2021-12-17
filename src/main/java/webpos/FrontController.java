@@ -37,7 +37,6 @@ public class FrontController extends HttpServlet {
 		Authentication auth;
 		
 		if(jobCode.equals("Access")) {
-			req.setAttribute("accessInfo", "희진");
 			//서비스 호출
 			auth= new Authentication(req);
 			action=auth.backController(1);

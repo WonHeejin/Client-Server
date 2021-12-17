@@ -2,11 +2,27 @@ package beans;
 
 public class Employee {
 	private String secode;
+	private String sename;
 	private String emcode;
 	private String empass;
 	private String emName;
 	private String date;
+	private int states;
 	
+	
+	
+	public int getStates() {
+		return states;
+	}
+	public void setStates(int states) {
+		this.states = states;
+	}
+	public String getSename() {
+		return sename;
+	}
+	public void setSename(String sename) {
+		this.sename = sename;
+	}
 	public String getDate() {
 		return date;
 	}
