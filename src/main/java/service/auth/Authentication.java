@@ -42,6 +42,7 @@ public class Authentication {
 		emp.setEmcode(this.req.getParameter("emCode"));
 		emp.setEmpass(this.req.getParameter("emPassword"));
 		emp.setStates(9);
+		//System.out.println(this.req.getParameter("seCode"));
 		/* 2. DAO 연동 
 		 *   2-1. EMPLOYEE :: SECODE 존재 여부
 		 *   2-2. EMPLOYEE :: EMCODE 존재 여부
@@ -86,8 +87,6 @@ public class Authentication {
 		if(dao.insAccessHistory(con, emp)) {
 				tran=true;		
 				}
-							
-		
 		action.setPage("index.html");
 		action.setRedirect(true);
 		dao.setTran(con, tran);
