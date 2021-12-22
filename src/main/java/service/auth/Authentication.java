@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import beans.ActionBeans;
 import beans.Employee;
@@ -12,6 +13,7 @@ public class Authentication {
 	private HttpServletRequest req;
 	private Employee emp;
 	private ActionBeans action;
+	private HttpSession session;
 	
 	public Authentication(HttpServletRequest req) {
 		this.req=req;
@@ -25,6 +27,9 @@ public class Authentication {
 			break;
 		case -1:
 			this.accessOutCtl();
+			break;
+		case 0:
+			this.accessAfter();
 			break;
 		default:
 			
@@ -42,6 +47,7 @@ public class Authentication {
 		emp.setEmcode(this.req.getParameter("emCode"));
 		emp.setEmpass(this.req.getParameter("emPassword"));
 		emp.setStates(9);
+		System.out.println(this.req.getParameter("seCode"));
 		//System.out.println(this.req.getParameter("seCode"));
 		/* 2. DAO 연동 
 		 *   2-1. EMPLOYEE :: SECODE 존재 여부
@@ -58,9 +64,11 @@ public class Authentication {
 		if(dao.isStore(con, emp)) {
 			if(dao.isPassword(con, emp)) {
 				if(dao.insAccessHistory(con, emp)) {
+					tran=true;
+					session=this.req.getSession();
+					session.setAttribute("seCode", emp.getSecode());
+					session.setAttribute("emCode", emp.getEmcode());
 					if((list=dao.getAccessInfo(con, emp))!=null) {
-						tran=true;
-						
 						req.setAttribute("accessInfo", list);}
 				}
 			}
@@ -78,21 +86,38 @@ public class Authentication {
 		DataAccessObject dao=new DataAccessObject();
 		this.emp=new Employee();
 		boolean tran=false;
+		session = this.req.getSession();
 		emp.setSecode(this.req.getParameter("seCode"));
 		emp.setEmcode(this.req.getParameter("emCode"));
 		emp.setStates(-9);
-		
+		System.out.println(this.req.getParameter("emCode"));
 		Connection con=dao.getConnection();
 		dao.modifyTran(con, false);
 		if(dao.insAccessHistory(con, emp)) {
-				tran=true;		
+				tran=true;	
+				session.invalidate();
 				}
 		action.setPage("index.html");
 		action.setRedirect(true);
 		dao.setTran(con, tran);
 		dao.modifyTran(con, true);
-		dao.closeConnection(con);
-		
-		
+		dao.closeConnection(con);	
 	}
+	
+	private void accessAfter() {
+		ArrayList<Employee> list =new ArrayList<Employee>();
+		Employee emp=new Employee();
+		DataAccessObject dao= new DataAccessObject();
+		Connection con = dao.getConnection();
+		session=this.req.getSession();
+		emp.setSecode((String)session.getAttribute("seCode"));
+		emp.setEmcode((String)session.getAttribute("emCode"));
+		if((list=dao.getAccessInfo(con, emp))!=null) {
+			req.setAttribute("accessInfo", list);
+			action.setRedirect(false);
+			action.setPage("main.jsp");
+		}
+	
+	}
+	
 }

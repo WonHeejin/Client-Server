@@ -14,27 +14,20 @@
 function authentication(){
 	 //1. HTML 개체와의 연결 : name, id 속성 이용
 	 //2. 사용자 데이터 수집
+	 const form = document.getElementsByName("login")[0];
 	 const message=["상점코드 입력", "직원코드 입력", "비밀번호 입력"];
- 	 const userData=[];
-	 userData[0]=document.getElementsByName("seCode")[0];
-	 userData[1]=document.getElementsByName("emCode")[0];
-	 userData[2]=document.getElementsByName("emPassword")[0];
-	 //form 생성
-	 const form=document.createElement("form");
-	 form.setAttribute("action","Access");
-	 form.setAttribute("method","post");
+ 	 const userData=[document.getElementsByName("seCode")[0],
+ 		 			 document.getElementsByName("emCode")[0],
+ 		 			 document.getElementsByName("emPassword")[0]];
 	 //3. 유효성 검사
 	 for(let index=0;index<userData.length;index++){
 		 if(!isEmpty(userData[index])){
 			 alert(message[index]);
 			 return;
-		 }else{
-			 form.appendChild(userData[index]);
 		 }
 	 }
 	 //4. 서버로 전송
-	 const f =document.body.appendChild(form);
-	 f.submit();
+	 form.submit();
 }
 </script>
 <link rel="stylesheet" type="text/css" href="resources/common.css"/>
@@ -54,6 +47,7 @@ function authentication(){
 </style>
 </head>
 <body>
+<form action="Access" name="login"method="post">
 	<table>
 		<tr class="title">
 			<td  colspan="2">WEB POS</td>
@@ -70,7 +64,7 @@ function authentication(){
 		</tr>
 		<tr class="line">
 			<td colspan="2">
-				<input type="text" name="emPassword"placeholder="비밀전호"/>
+				<input type="password" name="emPassword"placeholder="비밀번호"/>
 			</td>	
 		</tr>
 		<tr class="line">
@@ -83,5 +77,18 @@ function authentication(){
 			</td>	
 		</tr>
 	</table>
+</form>	
+<!-- <!-- <input type="number" value="1" min="1" max="10"/>
+<input type="range" name = range v min="1" max="100"/>
+<input type="color" name="color" value="#81BA7B"/>
+<input type="date" name="" min="2021-12-22" max="2022-04-04"/>
+<input type="time" name=""/>
+<input type="week" name="obc"/>
+<input type="button" value="값확인" onclick="valueCheck()"/>
+<script>
+function valueCheck(){
+	const obj=document.getElementsByName("obc")[0];
+	alert(obj.value);
+}</script>  -->
 </body>
 </html>
