@@ -47,7 +47,6 @@ public class Authentication {
 		emp.setEmcode(this.req.getParameter("emCode"));
 		emp.setEmpass(this.req.getParameter("emPassword"));
 		emp.setStates(9);
-		System.out.println(this.req.getParameter("seCode"));
 		//System.out.println(this.req.getParameter("seCode"));
 		/* 2. DAO 연동 
 		 *   2-1. EMPLOYEE :: SECODE 존재 여부
@@ -69,7 +68,10 @@ public class Authentication {
 					session.setAttribute("seCode", emp.getSecode());
 					session.setAttribute("emCode", emp.getEmcode());
 					if((list=dao.getAccessInfo(con, emp))!=null) {
-						req.setAttribute("accessInfo", list);}
+						req.setAttribute("accessInfo", list);
+						session.setAttribute("seName", list.get(0).getSename());
+						session.setAttribute("emName", list.get(0).getEmName());
+						session.setAttribute("date", list.get(0).getDate());
 				}
 			}
 		}
@@ -79,7 +81,7 @@ public class Authentication {
 		dao.modifyTran(con, true);
 		dao.closeConnection(con);
 		}
-	
+	}
 	private void accessOutCtl() {
 		//1. 클라이언트 데이터 빈에 담기 >> Employee:: secode, emcode
 		ArrayList<Employee> list= null;
@@ -90,7 +92,6 @@ public class Authentication {
 		emp.setSecode(this.req.getParameter("seCode"));
 		emp.setEmcode(this.req.getParameter("emCode"));
 		emp.setStates(-9);
-		System.out.println(this.req.getParameter("emCode"));
 		Connection con=dao.getConnection();
 		dao.modifyTran(con, false);
 		if(dao.insAccessHistory(con, emp)) {
