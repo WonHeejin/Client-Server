@@ -2,16 +2,93 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MainPage::static</title>
+<title>MainPage::static</title>	
+ <script src="resources/resource.js"></script>
+<script>
+
+/*1. 서버와의 통신 제어
+ * 		- HTML 개체의 제어 : form의 동적 생성
+ *2. 데이터의 유효성 검사(ORACLE의 CHECK 제약조건 역할)
+ *3. AJAX(비동기 타입..?) + Json(데이터타입) >> 앱 때문에 자주 사용
+ */
+function authentication(){
+	 //1. HTML 개체와의 연결 : name, id 속성 이용
+	 //2. 사용자 데이터 수집
+	 const form = document.getElementsByName("login")[0];
+	 const message=["상점코드 입력", "직원코드 입력", "비밀번호 입력"];
+ 	 const userData=[document.getElementsByName("seCode")[0],
+ 		 			 document.getElementsByName("emCode")[0],
+ 		 			 document.getElementsByName("emPassword")[0]];
+	 //3. 유효성 검사
+	 for(let index=0;index<userData.length;index++){
+		 if(!isEmpty(userData[index])){
+			 alert(message[index]);
+			 return;
+		 }
+	 }
+	 //4. 서버로 전송
+	 form.submit();
+}
+</script>
+<link rel="stylesheet" type="text/css" href="resources/common.css"/>
+<style>
+	table {position:absolute; top:50%; left:50%; transform: translate(-50%, -50%); width:52%}
+	td {text-align:center;}
+	input {width:98%; height:48px; text-align:center;
+			font-size:14pt; color:#81BA7B;}
+	#state {text-align:left; padding-left:20px;}
+	#ips {text-align:right; padding-right:20px;}
+	#btn {background-color: #81BA7B; color:#EAEAEA; height: 78px;
+			border:2px solid #81BA7B; font-weight:800;}
+	.title {height:80px;
+			background-color: #81BA7B; color:#EAEAEA; height: 78px;
+			border:2px solid #81BA7B; font-weight:800;font-size:14pt}
+	.line {height:70px;}		
+</style>
 </head>
 <body>
-	<h1>합격</h1>
-	<div>
-		<form action="Access" method="post">
-			<input type="text" name="mID" placeholder="아이디 입력"/>
-			<input type="password" name="mPassword" placeholder="비밀번호 입력"/>
-			<input type="submit" value="로그인"/>
-		<form/>
-	</div>
+<form action="Access" name="login"method="post">
+	<table>
+		<tr class="title">
+			<td  colspan="2">WEB POS</td>
+		</tr>
+		<tr class="line">
+			<td colspan="2">
+				<input type="text" name="seCode"placeholder="매장코드"/>
+			</td>	
+		</tr>
+		<tr class="line">
+			<td colspan="2">
+				<input type="text" name="emCode"placeholder="직원코드"/>
+			</td>	
+		</tr>
+		<tr class="line">
+			<td colspan="2">
+				<input type="password" name="emPassword"placeholder="비밀번호"/>
+			</td>	
+		</tr>
+		<tr class="line">
+			<td id="state">로그인상태유지</td>
+			<td id="ips">IP보안</td>
+		</tr>	
+		<tr class="title" >
+			<td colspan="2">
+				<input type="button" id="btn" onClick="authentication()" value="로그인"/>
+			</td>	
+		</tr>
+	</table>
+</form>	
+<!-- <!-- <input type="number" value="1" min="1" max="10"/>
+<input type="range" name = range v min="1" max="100"/>
+<input type="color" name="color" value="#81BA7B"/>
+<input type="date" name="" min="2021-12-22" max="2022-04-04"/>
+<input type="time" name=""/>
+<input type="week" name="obc"/>
+<input type="button" value="값확인" onclick="valueCheck()"/>
+<script>
+function valueCheck(){
+	const obj=document.getElementsByName("obc")[0];
+	alert(obj.value);
+}</script>  -->
 </body>
 </html>
