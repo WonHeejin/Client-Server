@@ -8,6 +8,9 @@
 	 }
 	 return check;
 }
+function accessOut(seCode,emCode){
+	location.href="AccessOut?seCode="+seCode+"&emCode="+emCode;
+}
 
 function makeForm(fname, faction, fmethod){
 	const form = document.createElement("form");

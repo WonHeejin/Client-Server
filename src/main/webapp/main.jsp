@@ -12,27 +12,25 @@
 	location.href="AccessOut?seCode="+seCode+"&emCode="+emCode;
 } 
  function mouseOver(obj){
-	 let styleName = (obj.id == "mgt")? "mgtOver": "salesOver";
-		obj.className = styleName;
+/* 	 let styleName = (obj.id == "mgt")? "mgtOver": "salesOver";
+		obj.className = styleName; */
 		obj.style.color = "#FFFFFF"
+		obj.style.backgroundColor=(obj.id == "mgt")? "#7F7CC9": "#EDCE7A"
  }
  function mouseLeave(obj){
 	 let fColor = (obj.id == "mgt")? "#6D6AB7": "#E0B94F";
-	 obj.className="select";
+	/*  obj.className="select"; */
 	 obj.style.color = fColor;
+	 obj.style.backgroundColor="#F6F6F6";
  }
- function moveService(action, seCode, seName, emCode, emName, date){
+ function moveService(action, seCode, emCode){
 	 const form= makeForm("",action,"post");
 	 const pSeCode = makeInputElement("hidden","seCode",seCode,"");
 	 const pEmCode = makeInputElement("hidden","emCode",emCode,"");
-	 const pSeName = makeInputElement("hidden","seName",seName,"");
-	 const pEmName = makeInputElement("hidden","emName",emName,"");
-	 const pDate = makeInputElement("hidden","date",date,"");
+	
  	 form.appendChild(pSeCode);
  	 form.appendChild(pEmCode);
- 	 form.appendChild(pSeName);
- 	 form.appendChild(pEmName);
- 	 form.appendChild(pDate);
+ 
  	 document.body.appendChild(form);
  	 form.submit();
  }
@@ -60,13 +58,12 @@
 				 position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);}
 	#mgt {border:10px solid #7F7CC9;float:left;
 		  background-color:#F6F6F6;color: #6D6AB7;cursor:pointer;}
-	.mgtOver {background-color: #7F7CC9;color:#FFFFFF;}
+	.mgtOver {background-color: #7F7CC9;}
 	#sales {border:10px solid #EDCE7A;float:right;
 			background-color:#F6F6F6;color: #E0B94F;cursor:pointer;}
-	.salesOver {background-color: #00B700; color:#FFFFFF;
+	.salesOver {background-color: #00B700;
 						border: 2px solid #00B700;}
-	#footer {position:absolute; top:93%;
-						width: 98.7%; height: 25px; line-height: 30px;
+	#footer {position:absolute; top:93%;width: 98.7%; height: 25px; line-height: 30px;
 		  background-color: #81BA7B; border:2px solid #81BA7B;
 		  color: #3A3A3A; font-size:12pt;
 		  text-align:right;}  	 
@@ -81,7 +78,7 @@
 	</div>
 		<div id="logo" >WEB POS</div>
 	<div id="buttonWrap">
-		<div id="mgt" class="select" onMouseOver="mouseOver(this)" onMouseOut="mouseLeave(this)" onClick="moveService('Management','${accessInfo[0].secode}','${accessInfo[0].sename}','${accessInfo[0].emcode}','${accessInfo[0].emName}','${accessInfo[0].date}')">Management</div>
+		<div id="mgt" class="select" onMouseOver="mouseOver(this)" onMouseOut="mouseLeave(this)" onClick="moveService('Management','${accessInfo[0].secode}','${accessInfo[0].emcode}')">Management</div>
 		<div id="sales" class="select" onMouseOver="mouseOver(this)" onMouseOut="mouseLeave(this)" onClick="moveService('Sales','${accessInfo[0].secode}','${accessInfo[0].emcode}')">Sales</div>
 	</div>
 		<input type="hidden" name="seCode" value="${accessInfo[0].secode}"/>

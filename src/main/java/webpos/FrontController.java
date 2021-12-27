@@ -26,7 +26,13 @@ public class FrontController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jobCode=request.getRequestURI().substring(request.getContextPath().length()+1);
 		this.doProcess(request, response);
+//		if(jobCode.equals("AccessOut")||jobCode.equals("S")) {
+//			this.doProcess(request, response);
+//		}else {
+//			response.sendRedirect("index.html");
+//		}
 	}
 
 

@@ -1,5 +1,8 @@
 package service.managements;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,8 +32,32 @@ public class WebPosManagement {
 	
 	private ActionBeans mgrMainCtl() {
 		ActionBeans action=new ActionBeans();
-		action.setPage("management.jsp");
-		action.setRedirect(false);
+		String page = "index.html";
+		boolean isRedirect = true;
+		session=req.getSession();
+		Employee emp= null;
+		ArrayList<Employee> list=null;
+		/* Access-Info */
+		if(this.req.getParameter("seCode").equals((String)session.getAttribute("seCode"))) {
+			if(this.req.getParameter("emCode").equals((String)session.getAttribute("emCode"))) {
+				emp=new Employee();
+				
+				emp.setSecode(this.req.getParameter("seCode"));
+				emp.setEmcode(this.req.getParameter("emCode"));
+				page="management.jsp";
+				isRedirect=false;
+			}else {System.out.println(this.req.getParameter("emCode")+"+"+(String)session.getAttribute("emCode"));}
+		}
+		/* DAO */
+		DataAccessObject dao= new DataAccessObject();
+		Connection con = dao.getConnection();
+		if((list=dao.getAccessInfo(con, emp))!=null) {
+			req.setAttribute("accessInfo", list);
+		}
+		dao.closeConnection(con);
+		
+		action.setPage(page);
+		action.setRedirect(isRedirect);
 		return action;
 	}
 }	

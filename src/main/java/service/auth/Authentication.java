@@ -84,7 +84,6 @@ public class Authentication {
 	}
 	private void accessOutCtl() {
 		//1. 클라이언트 데이터 빈에 담기 >> Employee:: secode, emcode
-		ArrayList<Employee> list= null;
 		DataAccessObject dao=new DataAccessObject();
 		this.emp=new Employee();
 		boolean tran=false;
