@@ -6,6 +6,20 @@
 <meta charset="UTF-8">
 <title>Management</title>
 <script src="resources/resource.js"></script>
+<script>
+	function getEmpList(seCode,emCode){
+		const form=makeForm("", "EmpList", "post");
+		const input1=makeInputElement("hidden", "seCode", seCode, "");
+		const input2=makeInputElement("hidden", "emCode", emCode, "");
+		form.appendChild(input1);
+		form.appendChild(input2);
+		document.body.appendChild(form);
+		form.submit();
+	}
+	function modEmp(seCode,emCode){
+		alert(seCode+":"+emCode);
+	}
+</script>
 <link rel="stylesheet" type="text/css" href="resources/common.css" />
 <style>
 body {
@@ -13,15 +27,15 @@ body {
 }
 
 #info {
-	width: 88%;
+	width: 60%;
 	height: 25px;
 	line-height: 25px;
 	background-color: #81BA7B;
-	border: 2px solid #81BA7B;
 	color: #3A3A3A;
 	font-size: 10pt;
 	text-align: right;
 	float: right;
+	padding: 0px 4px;
 }
 
 .btn {
@@ -34,14 +48,13 @@ body {
 	font-size: 12px;
 	cursor: pointer;
 }
-
+#infoLogo {width:100%;height: 25px;background:#81BA7B;}
 #logo {
 	padding: 0px 4px;
-	width: 10.71%;
+	width: 20%;
 	height: 25px;
 	line-height: 25px;
 	background-color: #81BA7B;
-	border: 2px solid #81BA7B;
 	color: #3A3A3A;
 	font-size: 10pt;
 	text-align: left;
@@ -53,6 +66,7 @@ body {
 #index {
 	width: 15%;
 	height: 570px;
+	clear:both;
 	float: left;
 	background-color: #81BA7B;
 	border: 0px solid #81BA7B;
@@ -108,13 +122,14 @@ h2 {
 	padding: 0px 20px 3px 10px;
 	font-size: 10pt;
 	text-align: center;
-	background: #fff;
+	background: #fff;cursor:pointer;
 }
 </style>
 
 </head>
 <body>
-	<div id="logo">WEB POS</div>
+	<div id="infoLogo">
+		<div id="logo">WEB POS</div>
 	<div id="info">
 		${accessInfo[0].sename}(${accessInfo[0].secode}) <span>${accessInfo[0].emName}(${accessInfo[0].emcode})</span>
 		최근 접속 일자 ${accessInfo[0].date} <span><input type="button"
@@ -122,15 +137,15 @@ h2 {
 			onClick="accessOut('${accessInfo[0].secode}','${accessInfo[0].emcode}')"
 			value="로그아웃" /></span>
 	</div>
+	</div>
+	
 	<div id="index">
-		index
 		<div class="menuContainer">
 			<h2>${accessInfo[0].sename}</h2>
 			<section class="nmenuContainer">
 				<article class="managements Active">
 					<!-- Open&Close, DashBoard -->
 					<p class="menuTitle">Daily Report</p>
-					
 				</article>
 				<article class="managements">
 					<p class="menuTitle">영업관리</p>
@@ -144,7 +159,7 @@ h2 {
 				<article class="managements">
 					<p class="menuTitle">직원관리</p>
 					<div class="items">
-						<p>직원리스트</p>
+						<p><span onClick="getEmpList('${accessInfo[0].secode}','${accessInfo[0].emcode}')">직원리스트</span></p>
 						<p>직원정보등록</p>
 						<p>직원정보수정</p>
 					</div>
@@ -168,7 +183,7 @@ h2 {
 			</section>
 		</div>
 	</div>
-	<div id="data"></div>
+	<div id="data">${list}</div>
 	<div id="footer">made by jean</div>
 </body>
 <script>
@@ -194,7 +209,9 @@ h2 {
 		  menuItems[itemsIdx].style.display = "none";
 	  }
 	  const activeItems = document.querySelector(".managements.Active .items");
-	  activeItems.style.display="block";
+	  if(activeItems!=null){
+		  activeItems.style.display="block";  
+	  }
   }
   activateItems();
  </script>

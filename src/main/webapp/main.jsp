@@ -39,14 +39,31 @@
 <style>
 	body {font-family: 'Gowun Dodum', sans-serif;}
 	span {margin:5px;}
-	#info {width:88%;height:25px; line-height:25px;
-		  background-color: #81BA7B; border:2px solid #81BA7B;
-		  color: #3A3A3A; font-size:10pt;
-		  text-align:right;float:right;}
-	#logo {padding:0px 5px;width:10.575%;height:25px; line-height:25px; background-color: #81BA7B;
-			border:2px solid #81BA7B;
-		  	color: #3A3A3A; font-size:10pt;
-			text-align:left;font-weight:800;font-size:15px;float:left;}
+	#info {
+	width: 60%;
+	height: 25px;
+	line-height: 25px;
+	background-color: #81BA7B;
+	color: #3A3A3A;
+	font-size: 10pt;
+	text-align: right;
+	float: right;
+	padding: 0px 4px;
+}
+	#infoLogo {width:100%;height: 25px;background:#81BA7B;}
+#logo {
+	padding: 0px 4px;
+	width: 10%;
+	height: 25px;
+	line-height: 25px;
+	background-color: #81BA7B;
+	color: #3A3A3A;
+	font-size: 10pt;
+	text-align: left;
+	font-weight: 800;
+	font-size: 15px;
+	float: left;
+}
 	 
 	.select,.mgtOver,.salesOver {width:40%;height:200px;text-align:center;
 			 					 line-height:200px;font-size:26pt;font-weight:800;
@@ -70,13 +87,16 @@
 </style>
 </head>
 <body>
-	<div id="info" >
-		${accessInfo[0].sename}(${accessInfo[0].secode})
-		<span>${accessInfo[0].emName}(${accessInfo[0].emcode})</span>
-		최근 접속 일자 ${accessInfo[0].date}
-		<span><input type="button" class="btn" onClick="accessOut('${accessInfo[0].secode}','${accessInfo[0].emcode}')" value="로그아웃"/></span>		
+	<div id="infoLogo">
+		<div id="logo">WEB POS</div>
+	<div id="info">
+		${accessInfo[0].sename}(${accessInfo[0].secode}) <span>${accessInfo[0].emName}(${accessInfo[0].emcode})</span>
+		최근 접속 일자 ${accessInfo[0].date} <span><input type="button"
+			class="btn"
+			onClick="accessOut('${accessInfo[0].secode}','${accessInfo[0].emcode}')"
+			value="로그아웃" /></span>
 	</div>
-		<div id="logo" >WEB POS</div>
+	</div>
 	<div id="buttonWrap">
 		<div id="mgt" class="select" onMouseOver="mouseOver(this)" onMouseOut="mouseLeave(this)" onClick="moveService('Management','${accessInfo[0].secode}','${accessInfo[0].emcode}')">Management</div>
 		<div id="sales" class="select" onMouseOver="mouseOver(this)" onMouseOut="mouseLeave(this)" onClick="moveService('Sales','${accessInfo[0].secode}','${accessInfo[0].emcode}')">Sales</div>

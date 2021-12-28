@@ -31,7 +31,7 @@ public class FrontController extends HttpServlet {
 //		if(jobCode.equals("AccessOut")||jobCode.equals("S")) {
 //			this.doProcess(request, response);
 //		}else {
-//			response.sendRedirect("index.html");
+//			response.sendRedirect("S");
 //		}
 	}
 
