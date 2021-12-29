@@ -7,8 +7,8 @@
 <title>Management</title>
 <script src="resources/resource.js"></script>
 <script>
-	function getEmpList(seCode,emCode){
-		const form=makeForm("", "EmpList", "post");
+	function getList(action,seCode,emCode){
+		const form=makeForm("", action, "post");
 		const input1=makeInputElement("hidden", "seCode", seCode, "");
 		const input2=makeInputElement("hidden", "emCode", emCode, "");
 		form.appendChild(input1);
@@ -18,6 +18,19 @@
 	}
 	function modEmp(seCode,emCode){
 		alert(seCode+":"+emCode);
+	}
+	
+	function modCu(cuCode){
+		alert(cuCode);
+	}
+	
+	function modGo(GoCode){
+		alert(GoCode);
+	}
+	function init(objName){
+		if(objName!=""){
+			document.getElementById(objName).click();
+		}
 	}
 </script>
 <link rel="stylesheet" type="text/css" href="resources/common.css" />
@@ -79,8 +92,8 @@ body {
 	float: right;
 	background-color: #EAEAEA;
 	border: 0px solid #EAEAEA;
+	text-align:center;
 }
-
 #footer {
 	clear: both;
 	position: absolute;
@@ -127,7 +140,7 @@ h2 {
 </style>
 
 </head>
-<body>
+<body onLoad="init('${objName}')">
 	<div id="infoLogo">
 		<div id="logo">WEB POS</div>
 	<div id="info">
@@ -142,13 +155,13 @@ h2 {
 	<div id="index">
 		<div class="menuContainer">
 			<h2>${accessInfo[0].sename}</h2>
-			<section class="nmenuContainer">
+			<section class="menuContainer">
 				<article class="managements Active">
 					<!-- Open&Close, DashBoard -->
 					<p class="menuTitle">Daily Report</p>
 				</article>
 				<article class="managements">
-					<p class="menuTitle">영업관리</p>
+					<p class="menuTitle" id="salesManagements">영업관리</p>
 					<div class="items">
 						<p>금월매출정보</p>
 						<p>상품매출정보</p>
@@ -157,25 +170,25 @@ h2 {
 					</div>
 				</article>
 				<article class="managements">
-					<p class="menuTitle">직원관리</p>
+					<p class="menuTitle" id="empManagements">직원관리</p>
 					<div class="items">
-						<p><span onClick="getEmpList('${accessInfo[0].secode}','${accessInfo[0].emcode}')">직원리스트</span></p>
+						<p><span onClick="getList('EmpList','${accessInfo[0].secode}','${accessInfo[0].emcode}')">직원리스트</span></p>
 						<p>직원정보등록</p>
 						<p>직원정보수정</p>
 					</div>
 				</article>
 				<article class="managements">
-					<p class="menuTitle">회원관리</p>
+					<p class="menuTitle" id="cuManagements">회원관리</p>
 					<div class="items">
-						<p>회원리스트</p>
+						<p><span onClick="getList('CuList','${accessInfo[0].secode}','${accessInfo[0].emcode}')">회원리스트</span></p>
 						<p>회원정보등록</p>
 						<p>회원정보수정</p>
 					</div>
 				</article>
 				<article class="managements">
-					<p class="menuTitle">상품관리</p>
+					<p class="menuTitle" id="goManagements">상품관리</p>
 					<div class="items">
-						<p>상품리스트</p>
+						<p><span onClick="getList('GoList','${accessInfo[0].secode}','${accessInfo[0].emcode}')">상품리스트</span></p>
 						<p>상품정보등록</p>
 						<p>상품정보수정</p>
 					</div>

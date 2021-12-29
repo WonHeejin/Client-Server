@@ -1,6 +1,6 @@
 package beans;
 
-public class Employee {
+public class Employees {
 	private String secode;
 	private String sename;
 	private String emcode;

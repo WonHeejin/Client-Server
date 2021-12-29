@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import beans.Employee;
+import beans.Employees;
 
 public class DataAccessObject {
 	
@@ -72,7 +72,7 @@ public class DataAccessObject {
 	 }
 	
 	/* insAccessHistory */
-	public boolean insAccessHistory(Connection connection, Employee emp) {
+	public boolean insAccessHistory(Connection connection, Employees emp) {
 		 boolean result=false;
 		 String dml="INSERT INTO AH(AH_SRCODE,AH_EMCODE,AH_ACCESSTIME,AH_ACCESSTYPE) VALUES (?,?,DEFAULT,?)";
 		 try {
@@ -87,8 +87,8 @@ public class DataAccessObject {
 		 return result;
 	 }
 		/* getAccessInfo */
-	 public ArrayList<Employee> getAccessInfo(Connection connection, Employee emp){
-		 ArrayList<Employee> list=new ArrayList<Employee>();
+	 public ArrayList<Employees> getAccessInfo(Connection connection, Employees emp){
+		 ArrayList<Employees> list=new ArrayList<Employees>();
 		 String query="SELECT SRCODE, SRNAME, EMCODE, EMNAME, DATES FROM ACCESSINFO        "
 		 		+ "WHERE DATES = (SELECT TO_CHAR(MAX(AH_ACCESSTIME), 'YYYY-MM-DD HH24:MI:SS') FROM AH"
 		 		+ "                    WHERE AH_SRCODE=? AND AH_EMCODE=?)";
@@ -98,7 +98,7 @@ public class DataAccessObject {
 			psmt.setNString(2, emp.getEmcode());
 			rs=psmt.executeQuery();
 			while(rs.next()) {
-				Employee em=new Employee();
+				Employees em=new Employees();
 				em.setSecode(rs.getNString("SRCODE"));
 				em.setSename(rs.getNString("SRNAME"));
 				em.setEmcode(rs.getNString("EMCODE"));

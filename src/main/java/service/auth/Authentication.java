@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import beans.ActionBeans;
-import beans.Employee;
+import beans.Employees;
 
 public class Authentication {
 	private HttpServletRequest req;
-	private Employee emp;
+	private Employees emp;
 	private ActionBeans action;
 	private HttpSession session;
 	
@@ -39,9 +39,9 @@ public class Authentication {
 	
 	private void accessCtl() {
 		//1. 클라이언트 데이터 빈에 담기 >> Employee:: secode, emcode, empass
-		ArrayList<Employee> list= null;
+		ArrayList<Employees> list= null;
 		DataAccessObject dao=new DataAccessObject();
-		this.emp=new Employee();
+		this.emp=new Employees();
 		boolean tran=false;
 		emp.setSecode(this.req.getParameter("seCode"));
 		emp.setEmcode(this.req.getParameter("emCode"));
@@ -85,7 +85,7 @@ public class Authentication {
 	private void accessOutCtl() {
 		//1. 클라이언트 데이터 빈에 담기 >> Employee:: secode, emcode
 		DataAccessObject dao=new DataAccessObject();
-		this.emp=new Employee();
+		this.emp=new Employees();
 		boolean tran=false;
 		session = this.req.getSession();
 		emp.setSecode(this.req.getParameter("seCode"));
@@ -105,8 +105,8 @@ public class Authentication {
 	}
 	
 	private void accessAfter() {
-		ArrayList<Employee> list =new ArrayList<Employee>();
-		Employee emp=new Employee();
+		ArrayList<Employees> list =new ArrayList<Employees>();
+		Employees emp=new Employees();
 		DataAccessObject dao= new DataAccessObject();
 		Connection con = dao.getConnection();
 		session=this.req.getSession();

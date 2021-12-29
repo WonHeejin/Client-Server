@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import beans.ActionBeans;
-import beans.Employee;
+import beans.Employees;
 import service.managements.DataAccessObject;
 
 public class WebPos {
@@ -35,12 +35,12 @@ public class WebPos {
 		String page = "index.html";
 		boolean isRedirect = true;
 		session=req.getSession();
-		Employee emp= null;
-		ArrayList<Employee> list=null;
+		Employees emp= null;
+		ArrayList<Employees> list=null;
 		/* Access-Info */
 		if(this.req.getParameter("seCode").equals((String)session.getAttribute("seCode"))) {
 			if(this.req.getParameter("emCode").equals((String)session.getAttribute("emCode"))) {
-				emp=new Employee();
+				emp=new Employees();
 				
 				emp.setSecode(this.req.getParameter("seCode"));
 				emp.setEmcode(this.req.getParameter("emCode"));

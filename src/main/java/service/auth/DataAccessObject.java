@@ -2,7 +2,7 @@ package service.auth;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import beans.Employee;
+import beans.Employees;
 
 class DataAccessObject extends webpos.DataAccessObject{
 
@@ -17,7 +17,7 @@ class DataAccessObject extends webpos.DataAccessObject{
 		 *   2-3. EMPLOYEE :: PASSWORD일치 여부 :: RETURN : 1  >> P2-4 
 		 *   2-4. ACCESSHISTORY : INSERT :: RETURN : 1
 		 *   2-5. 정보 취합  --> ARRAYLIST<EMPLOYEE>*/
-	 boolean isStore(Connection connection, Employee emp) {
+	 boolean isStore(Connection connection, Employees emp) {
 		 boolean result=false;
 		 String query="SELECT COUNT(*) FROM EM WHERE EM_SRCODE=? AND EM_CODE=?";
 		 try {
@@ -39,7 +39,7 @@ class DataAccessObject extends webpos.DataAccessObject{
 		 return result;
 	 }
 	 
-	 boolean isPassword(Connection connection, Employee emp) {
+	 boolean isPassword(Connection connection, Employees emp) {
 		 boolean result=false;
 		 String query="SELECT COUNT(*) FROM EM WHERE EM_SRCODE=? AND EM_CODE=? AND EM_PASSWORD=?";
 		 try {
