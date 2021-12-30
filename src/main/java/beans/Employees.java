@@ -8,7 +8,7 @@ public class Employees {
 	private String emName;
 	private String date;
 	private int states;
-	private String emStateCode;
+	private int emStateCode;
 	private String emStateName;
 	private int stCode;
 	private String stName;
@@ -22,10 +22,10 @@ public class Employees {
 	public void setTodayInfo(String todayInfo) {
 		this.todayInfo = todayInfo;
 	}
-	public String getEmStateCode() {
+	public int getEmStateCode() {
 		return emStateCode;
 	}
-	public void setEmStateCode(String emStateCode) {
+	public void setEmStateCode(int emStateCode) {
 		this.emStateCode = emStateCode;
 	}
 	public String getEmStateName() {

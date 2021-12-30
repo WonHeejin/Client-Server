@@ -118,7 +118,7 @@ public class DataAccessObject {
 		 return list;
 	 }
 	
-	protected boolean convertToboolean(int value) {		 
+	public boolean convertToboolean(int value) {		 
 		 return (value>0)?true:false;
 	 } 
 }

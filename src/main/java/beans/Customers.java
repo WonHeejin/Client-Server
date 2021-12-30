@@ -5,12 +5,12 @@ public class Customers {
 	private String cuName;
 	private String cuPhone;
 	private String cuClName;
-	private String cuClCode;
+	private int cuClCode;
 	
-	public String getCuClCode() {
+	public int getCuClCode() {
 		return cuClCode;
 	}
-	public void setCuClCode(String cuClCode) {
+	public void setCuClCode(int cuClCode) {
 		this.cuClCode = cuClCode;
 	}
 	public String getCuCode() {
