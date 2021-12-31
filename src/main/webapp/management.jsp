@@ -72,8 +72,7 @@
 		getAjaxData("RegEmp",data);
 	}
 	function getMmbForm(action){
-		const data=null;
-		getAjaxData(action,data);
+		getAjaxData(action,null);
 	}
 	function RegMmb(cuCode) {
 		const cuName=document.getElementsByName("cuName")[0].value;
@@ -86,9 +85,27 @@
 		getAjaxData("RegMmb",data);
 		 
 	}
-	function getGoForm(action){}
+	function getGoForm(action){
+		getAjaxData(action,null);
+	}
 	function RegGo() {
-		alert("상품등록");
+		const goCode=document.getElementsByName("goCode")[0].value;
+		const goName=document.getElementsByName("goName")[0].value;
+		const goCost=document.getElementsByName("goCost")[0].value;
+		const goPrice=document.getElementsByName("goPrice")[0].value;
+		const goStocks=document.getElementsByName("goStocks")[0].value;
+		const goDiscount=document.getElementsByName("goDiscount")[0].value;
+		const goCaCode=document.getElementsByName("goCaCode")[0].value;
+		const goState=document.getElementsByName("goState")[0].value;
+		const data="goCode="+encodeURIComponent(goCode)
+					+"&goName="+encodeURIComponent(goName)
+					+"&goCost="+encodeURIComponent(goCost)
+					+"&goPrice="+encodeURIComponent(goPrice)
+					+"&goStocks="+encodeURIComponent(goStocks)
+					+"&goDiscount="+encodeURIComponent(goDiscount)
+					+"&goCaCode="+encodeURIComponent(goCaCode)
+					+"&goState="+encodeURIComponent(goState);
+		getAjaxData("RegGo",data);
 	}
 </script>
 <link rel="stylesheet" type="text/css" href="resources/common.css" />

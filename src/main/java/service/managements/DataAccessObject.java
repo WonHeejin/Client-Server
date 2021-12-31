@@ -12,6 +12,27 @@ import beans.Goods;
 public class DataAccessObject extends webpos.DataAccessObject{
 	private ResultSet rs;
 	
+	boolean insRegGo(Connection con, Goods go) {
+		boolean result=false;
+		String dml="INSERT INTO GO(GO_CODE,GO_NAME,GO_COST,GO_PRICE,GO_STOCKS,GO_DISCOUNT,GO_CACODE,GO_STCODE)"
+				+ "       VALUES(?,?,?,?,?,?,?,?)";
+		try {
+System.out.println(go.getGoState());
+			this.psmt=con.prepareStatement(dml);
+			this.psmt.setNString(1, go.getGoCode());
+			this.psmt.setNString(2, go.getGoName());
+			this.psmt.setInt(3, go.getGoCost());
+			this.psmt.setInt(4, go.getGoPrice());
+			this.psmt.setInt(5, go.getGoStocks());
+			this.psmt.setInt(6, go.getGoDiscount());
+			this.psmt.setNString(7, go.getGoCaCode());
+			this.psmt.setInt(8, go.getGoState());
+			result=this.convertToboolean(this.psmt.executeUpdate());
+		}catch(SQLException e) {e.printStackTrace();}
+		
+		return result;
+	}
+	
 	boolean insRegMmb(Connection con, Customers cu) {
 		boolean result=false;
 		String dml = "INSERT INTO CU(CU_CODE,CU_NAME,CU_PHONE,CU_CLCODE) VALUES(?,?,?,?)";
@@ -93,7 +114,8 @@ public class DataAccessObject extends webpos.DataAccessObject{
 				go.setGoDiscount(rs.getInt("GODISCOUNT"));
 				go.setGoCaCode(rs.getNString("GOCACODE"));
 				go.setGoCaName(rs.getNString("GOCANAME"));
-				go.setGoState((rs.getInt("GOSTCODE")==1)?"판매가능":"판매불가");
+				go.setGoState(rs.getInt("GOSTCODE"));
+				go.setGoStName(rs.getNString("STNAME"));
 				list.add(go);
 				
 			}

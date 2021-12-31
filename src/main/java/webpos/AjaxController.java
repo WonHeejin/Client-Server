@@ -15,7 +15,7 @@ import service.managements.WebPosManagement;
 /**
  * Servlet implementation class AjaxController
  */
-@WebServlet({"/RegEmpForm","/RegMmbForm","/RegGoForm","/RegEmp","/RegMmb"})
+@WebServlet({"/RegEmpForm","/RegMmbForm","/RegGoForm","/RegEmp","/RegMmb","/RegGo"})
 public class AjaxController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -57,6 +57,9 @@ public class AjaxController extends HttpServlet {
 			}else if(jobCode.equals("RegGoForm")) {
 				wpm=new WebPosManagement(req);
 				ajaxData=wpm.backController("13");
+			}else if(jobCode.equals("RegGo")) {
+				wpm=new WebPosManagement(req);
+				ajaxData=wpm.backController("14");
 			}else {}
 		}else {}
 		res.setContentType("text/html;charset=utf-8");

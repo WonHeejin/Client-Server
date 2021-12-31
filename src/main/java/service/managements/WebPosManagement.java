@@ -57,11 +57,42 @@ public class WebPosManagement {
 			break;	
 		case "13":
 			form=this.regGoForm();
+			break;
+		case "14":
+			form=this.regGo();
 			break;	
 		default:
 			
 		}
 		return form;
+	}
+	private String regGo() {
+		String data=null;
+		boolean tran=false;
+		Goods go = new Goods();
+		go.setGoCode(this.req.getParameter("goCode"));
+		go.setGoName(this.req.getParameter("goName"));
+		go.setGoCost(Integer.parseInt(this.req.getParameter("goCost")));
+		go.setGoPrice(Integer.parseInt(this.req.getParameter("goPrice")));
+		go.setGoDiscount(Integer.parseInt(this.req.getParameter("goDiscount")));
+		go.setGoStocks(Integer.parseInt(this.req.getParameter("goStocks")));
+		go.setGoCaCode(this.req.getParameter("goCaCode"));
+		go.setGoState(Integer.parseInt(this.req.getParameter("goState")));
+		
+		DataAccessObject dao = new DataAccessObject();
+		Connection con=dao.getConnection();
+		dao.modifyTran(con, false);
+		if(dao.insRegGo(con, go)) {
+			data="GoList";
+			tran=true;
+		}else {
+			data=this.regGoForm();
+		}
+		
+		dao.setTran(con, tran);
+		dao.modifyTran(con, true);
+		dao.closeConnection(con);
+		return data;
 	}
 	private String regMmb() {
 		String data=null;
@@ -257,7 +288,7 @@ public class WebPosManagement {
 			sb.append("<td>"+go.getGoDiscount()+"</td>");
 			sb.append("<td>"+go.getGoStocks()+"</td>");
 			sb.append("<td>"+go.getGoCaName()+"</td>");
-			sb.append("<td>"+go.getGoState()+"</td>");
+			sb.append("<td>"+go.getGoStName()+"</td>");
 			sb.append("</tr>");
 		}
 		sb.append("<td colspan=\'4\'></td>");

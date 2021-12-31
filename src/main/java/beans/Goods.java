@@ -9,8 +9,16 @@ public class Goods {
 	private int goDiscount;
 	private String goCaCode;
 	private String goCaName;
-	private String goState;
+	private int goState;
+	private String goStName;
 	
+	
+	public String getGoStName() {
+		return goStName;
+	}
+	public void setGoStName(String goStName) {
+		this.goStName = goStName;
+	}
 	public String getGoCode() {
 		return goCode;
 	}
@@ -59,10 +67,10 @@ public class Goods {
 	public void setGoCaName(String goCaName) {
 		this.goCaName = goCaName;
 	}
-	public String getGoState() {
+	public int getGoState() {
 		return goState;
 	}
-	public void setGoState(String goState) {
+	public void setGoState(int goState) {
 		this.goState = goState;
 	}
 	
