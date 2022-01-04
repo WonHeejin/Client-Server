@@ -38,10 +38,17 @@
 	 */
 	function getAjaxData(action, data) {
 		let ajax = new XMLHttpRequest();
+		/*응답받은 후의 행동 결정*/
 		ajax.onreadystatechange = function() {
 			if (ajax.readyState == 4 && ajax.status == 200) {
+				/*FrontController에서 입력한 
+					res.setContentType("text/html;charset=utf-8");
+					PrintWriter p= res.getWriter();
+					p.write(ajaxData);
+				가 ajax.responseText로 오고, 이걸 다시 serverData에 저장*/
 				let serverData = ajax.responseText;
 				if(serverData.substr(0,1)=="<"){
+					/*받아온 serverData를 id가 "ajaxData"인 곳에 전달*/
 					document.getElementById("ajaxData").innerHTML = serverData;	
 				}else{
 					document.getElementById(serverData).click();
@@ -50,6 +57,7 @@
 				
 			}
 		};
+		/*서버 연결 요청*/
 		ajax.open("post", action, true);
 		ajax.setRequestHeader("Content-type",
 				"application/x-www-form-urlencoded");
@@ -107,12 +115,193 @@
 					+"&goState="+encodeURIComponent(goState);
 		getAjaxData("RegGo",data);
 	}
+	function getModEmpForm(action,seCode){
+		const data="seCode="+encodeURIComponent(seCode);
+		getAjaxData(action,data);
+	}
+	function activateEmp(obj,idx){
+		const emPassword=document.getElementsByName("emPassword")[idx];
+		const work=document.getElementsByName("work")[idx];
+		const emBtn=document.getElementsByName("emBtn")[idx];
+		if(obj.value=="수정"){
+			obj.value="수정취소";
+			emPassword.readOnly=false;
+			work.disabled=false;
+			emBtn.disabled=false;
+			
+		}else{
+			obj.value="수정";
+			emPassword.readOnly=true;
+			work.disabled=true;
+			emBtn.disabled=true;
+		}
+	}
+	function updEmp(seCode,emCode,idx){
+		const emPassword=document.getElementsByName("emPassword")[idx];
+		const work=document.getElementsByName("work")[idx];
+
+	     const data="seCode="+encodeURIComponent(seCode)
+	     			+"&emCode="+encodeURIComponent(emCode)
+	     			+"&emPassword="+encodeURIComponent(emPassword.value)
+	     			+"&emState="+encodeURIComponent(work.value);
+	     getAjaxData("ModEmp",data);
+
+	}
+	
+	function getModForm(action){
+		getAjaxData(action,null);
+	}
+	function activateMmb(obj,idx){
+		const work=document.getElementsByName("work")[idx];
+		const mmbBtn=document.getElementsByName("mmbBtn")[idx];
+		if(obj.value=="수정"){
+			obj.value="수정취소";
+			work.disabled=false;
+			mmbBtn.disabled=false;
+		}else{
+			obj.value="수정";
+			work.disabled=true;
+			mmbBtn.disabled=true;
+		}
+	}
+	function updMmb(cuCode,idx){
+		const cuClCode =  document.getElementsByName("work")[idx];
+	     
+	     const data="cuCode="+encodeURIComponent(cuCode)
+	     			+"&cuClCode="+encodeURIComponent(cuClCode.value);
+	     getAjaxData("ModMmb",data);
+	}
+	function activateGo(obj,idx){
+		const go1=document.getElementsByName("goCost")[idx];
+		const go2=document.getElementsByName("goPrice")[idx];
+		const go3=document.getElementsByName("goDiscount")[idx];
+		const go4=document.getElementsByName("goStocks")[idx];
+		const st=document.getElementsByName("st")[idx];
+		const ca=document.getElementsByName("ca")[idx];
+		const goBtn=document.getElementsByName("goBtn")[idx];
+		if(obj.value=="수정"){
+			obj.value="수정취소";
+			go1.readOnly=false;
+			go2.readOnly=false;
+			go3.readOnly=false;
+			go4.readOnly=false;
+			st.disabled=false;
+			ca.disabled=false;
+			goBtn.disabled=false;
+		}else{
+			obj.value="수정";
+			go1.readOnly=true;
+			go2.readOnly=true;
+			go3.readOnly=true;
+			go4.readOnly=true;
+			st.disabled=true;
+			ca.disabled=true;
+			goBtn.disabled=true;
+		}
+	}
+	function updGo(goCode,idx){
+		const goCost=document.getElementsByName("goCost")[idx].value;
+		const goPrice=document.getElementsByName("goPrice")[idx].value;
+		const goStocks=document.getElementsByName("goStocks")[idx].value;
+		const goDiscount=document.getElementsByName("goDiscount")[idx].value;
+		const goCaCode=document.getElementsByName("ca")[idx].value;
+		const goState=document.getElementsByName("st")[idx].value;
+		const data="goCode="+encodeURIComponent(goCode)
+					+"&goCost="+encodeURIComponent(goCost)
+					+"&goPrice="+encodeURIComponent(goPrice)
+					+"&goStocks="+encodeURIComponent(goStocks)
+					+"&goDiscount="+encodeURIComponent(goDiscount)
+					+"&goCaCode="+encodeURIComponent(goCaCode)
+					+"&goState="+encodeURIComponent(goState);
+		getAjaxData("ModGo",data);
+	}
+	function getAjaxJson(action,data,fn){
+		const ajax = new XMLHttpRequest();
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				window[fn](JSON.parse(ajax.responseText));	//json 데이터 parse하면 배열로 접근			
+			}
+		};
+		ajax.open("post", action, true);
+		ajax.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+		ajax.send(data);
+	}
+	function getThisMonthSalesInfo(seCode){
+		data="seCode="+encodeURIComponent(seCode);
+		getAjaxJson("MSI",data,"toHTMLfromMSI");
+	}
+	function toHTMLfromMSI(jsonData){
+		let message="<table>";
+		message+="<tr>";
+		message+="<td>날짜</td><td>매장명</td><td>매출액</td><td>구매원가</td><td>순이익</td>";
+		message+="</tr>";
+		
+		for(let index=0;index<jsonData.length;index++){
+			message+="<tr><td>";
+			message+=jsonData[index].monthly;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].seName;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].amount;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].goCost;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].profit;
+			message+="</td></tr>";
+		}
+		
+		
+		message+="</table>";	
+		document.getElementById("ajaxData").innerHTML = message;
+	}
+	function getGoodsSalesInfo(seCode){
+		const data="seCode="+encodeURIComponent(seCode);
+		getAjaxJson("GSI",data,"toHTMLfromGSI");
+	}
+	function toHTMLfromMSI(jsonData){
+		let message="<table>";
+		message+="<tr>";
+		message+="<td>날짜</td><td>매장명</td><td>상품코드</td><td>매출액</td><td>구매원가</td><td>순이익</td>";
+		message+="</tr>";
+		
+		for(let index=0;index<jsonData.length;index++){
+			message+="<tr><td>";
+			message+=jsonData[index].monthly;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].seName;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].goCode;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].amount;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].goCost;
+			message+="</td>";
+			message+="<td>";
+			message+=jsonData[index].profit;
+			message+="</td></tr>";
+		}
+		
+		
+		message+="</table>";	
+		document.getElementById("ajaxData").innerHTML = message;
+	}
 </script>
 <link rel="stylesheet" type="text/css" href="resources/common.css" />
 <style>
 body {
-	font-family: 'Gowun Dodum', sans-serif;
+	font-family: 'Gowun Dodum', sans-serif; margin: 0;
+	width: 100vw;
+        height: 100vh;
 }
+  
 
 #info {
 	width: 60%;
@@ -159,7 +348,7 @@ body {
 
 #index {
 	width: 15%;
-	height: 570px;
+	height: 100%;
 	clear: both;
 	float: left;
 	background-color: #81BA7B;
@@ -169,18 +358,19 @@ body {
 
 #ajaxData {
 	width: 85%;
-	height: 570px;
+	height: 100%;
 	float: right;
 	background-color: #EAEAEA;
 	border: 0px solid #EAEAEA;
 	text-align: center;
 }
 
+td{width:11%;}
 #footer {
 	clear: both;
 	position: absolute;
 	top: 93%;
-	width: 98.463%;
+	width: 100%;
 	height: 25px;
 	line-height: 30px;
 	background-color: #81BA7B;
@@ -246,8 +436,8 @@ h2 {
 				<article class="managements">
 					<p class="menuTitle" id="salesManagements">영업관리</p>
 					<div class="items">
-						<p>금월매출정보</p>
-						<p>상품매출정보</p>
+						<p><span onClick="getThisMonthSalesInfo('${accessInfo[0].secode}')">금월매출정보</span></p>
+						<p><span onClick="getGoodsSalesInfo('${accessInfo[0].secode}')">상품매출정보</span></p>
 						<p>요일매출정보</p>
 						<p>회원매출정보</p>
 					</div>
@@ -262,7 +452,7 @@ h2 {
 						<p>
 							<span onClick="getEmpForm('RegEmpForm','${accessInfo[0].secode}')">직원정보등록</span>
 						</p>
-						<p>직원정보수정</p>
+						<p><span onClick="getModEmpForm('ModEmpForm','${accessInfo[0].secode}')">직원정보수정</span></p>
 					</div>
 				</article>
 				<article class="managements">
@@ -275,7 +465,7 @@ h2 {
 						<p>
 							<span onClick="getMmbForm('RegMmbForm')">회원정보등록</span>
 						</p>
-						<p>회원정보수정</p>
+						<p><span onClick="getModForm('ModMmbForm')">회원정보수정</span></p>
 					</div>
 				</article>
 				<article class="managements">
@@ -288,7 +478,7 @@ h2 {
 						<p>
 							<span onClick="getGoForm('RegGoForm')">상품정보등록</span>
 						</p>
-						<p>상품정보수정</p>
+						<p><span onClick="getModForm('ModGoForm')">상품정보수정</span></p>
 					</div>
 				</article>
 			</section>

@@ -8,10 +8,134 @@ import java.util.ArrayList;
 import beans.Customers;
 import beans.Employees;
 import beans.Goods;
+import beans.Sales;
 
 public class DataAccessObject extends webpos.DataAccessObject{
 	private ResultSet rs;
 	
+	ArrayList<Sales> getGoodsInfo(Connection con, Sales sales){
+		ArrayList<Sales> list= new ArrayList<Sales>();
+		return list;
+	}
+	ArrayList<Sales> getSalesInfo(Connection con, Sales sales){
+		ArrayList<Sales> list= new ArrayList<Sales>();
+		String query="SELECT SUBSTR(MONTHLY,1,6) AS MONTHLY, SRCODE, SRNAME, SUM(AMOUNT) AS AMOUNT, SUM(GOCOST) AS GOCOST, SUM(PROFIT) AS PROFIT "
+				+ "FROM DBA_RUN.SALESINFO WHERE SUBSTR(MONTHLY,1,6)=TO_CHAR(SYSDATE,'YYYYMM') AND SRCODE=? "
+				+ "GROUP BY SUBSTR(MONTHLY,1,6), SRCODE,SRCODE, SRNAME";
+		try {
+			this.psmt=con.prepareStatement(query);
+			this.psmt.setNString(1, sales.getSeCode());
+			rs=this.psmt.executeQuery();
+			while(rs.next()) {
+				Sales s = new Sales();
+				s.setMonthly(rs.getNString("MONTHLY"));
+				s.setSeCode(rs.getNString("SRCODE"));
+				s.setSeName(rs.getNString("SRNAME"));
+				s.setAmount(rs.getInt("AMOUNT"));
+				s.setGoCost(rs.getInt("GOCOST"));
+				s.setProfit(rs.getInt("PROFIT"));
+				list.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {if(rs.isClosed()) {rs.close();}} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return list;
+	}
+	boolean modGo(Connection con, Goods go) {	
+		boolean result=false;
+		
+		String dml = "UPDATE GO SET GO_COST=?, GO_PRICE=?, GO_STOCKS=?, GO_DISCOUNT=?, GO_CACODE=?, GO_STCODE=? WHERE GO_CODE=?";
+		try {
+			this.psmt=con.prepareStatement(dml);
+			this.psmt.setInt(1, go.getGoCost());
+			this.psmt.setInt(2, go.getGoPrice());
+			this.psmt.setInt(3, go.getGoStocks());
+			this.psmt.setInt(4, go.getGoDiscount());
+			this.psmt.setNString(5, go.getGoCaCode());
+			this.psmt.setInt(6, go.getGoState());
+			this.psmt.setNString(7, go.getGoCode());
+			result=this.convertToboolean(this.psmt.executeUpdate());
+		}catch(SQLException e) {e.printStackTrace();}
+		
+		return result;
+	}
+	boolean updMmb(Connection con, Customers cu) {	
+		boolean result=false;
+		
+		String dml = "UPDATE CU SET CU_CLCODE=? WHERE CU_CODE=?";
+		try {
+			this.psmt=con.prepareStatement(dml);
+			this.psmt.setNString(1, cu.getCuClCode()+"");
+			this.psmt.setNString(2, cu.getCuCode());
+			result=this.convertToboolean(this.psmt.executeUpdate());
+		}catch(SQLException e) {e.printStackTrace();}
+		
+		return result;
+	}
+	ArrayList<Customers>getMmbCodeList(Connection con){
+		ArrayList<Customers> list= new ArrayList<Customers>();
+		String query="SELECT*FROM DBA_RUN.CULIST";
+		try {
+			this.psmt=con.prepareStatement(query);
+			rs=this.psmt.executeQuery();
+			while(rs.next()) {
+				Customers cu= new Customers();
+				cu.setCuCode(rs.getNString("CUCODE"));
+				cu.setCuName(rs.getNString("CUNAME"));
+				cu.setCuPhone(rs.getNString("CUPHONE"));
+				cu.setCuClCode(rs.getInt("CLCODE"));
+				cu.setCuClName(rs.getNString("CLNAME"));
+				list.add(cu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {if(rs.isClosed()) {rs.close();}} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return list;
+	}
+	boolean updEmp(Connection con,Employees emp) {
+		boolean result=false;
+		String dml = "UPDATE EM SET EM_PASSWORD=?, EM_STATE=? WHERE EM_SRCODE=? AND EM_CODE=?";
+		try {
+			this.psmt=con.prepareStatement(dml);
+			psmt.setNString(1, emp.getEmpass());
+			psmt.setInt(2, emp.getEmStateCode());
+			psmt.setNString(3, emp.getSecode());
+			psmt.setNString(4, emp.getEmcode());
+			result=this.convertToboolean(this.psmt.executeUpdate());
+		}catch(SQLException e) {e.printStackTrace();}
+		
+		return result;
+	}
+	ArrayList<Employees>getEmpCodeList(Connection con,Employees emp){
+		ArrayList<Employees> list=new ArrayList<Employees>();
+		String query = "SELECT*FROM DBA_RUN.EMLIST WHERE EMSRCODE= ?";
+		try {
+			this.psmt=con.prepareStatement(query);
+			this.psmt.setNString(1, emp.getSecode());
+			this.rs=this.psmt.executeQuery();
+			while(rs.next()) {
+				Employees em = new Employees();
+				em.setSecode(rs.getNString("EMSRCODE"));
+				em.setEmcode(rs.getNString("EMCODE"));
+				em.setEmName(rs.getNString("EMNAME"));
+				em.setEmStateCode(rs.getInt("EMSTATE"));
+				em.setEmStateName(rs.getNString("STNAME"));
+				list.add(em);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(!rs.isClosed()) {rs.close();}} catch (SQLException e) {e.printStackTrace();}
+		}
+		return list;
+	}
 	boolean insRegGo(Connection con, Goods go) {
 		boolean result=false;
 		String dml="INSERT INTO GO(GO_CODE,GO_NAME,GO_COST,GO_PRICE,GO_STOCKS,GO_DISCOUNT,GO_CACODE,GO_STCODE)"
