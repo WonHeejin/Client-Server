@@ -93,6 +93,7 @@ public class WebPosManagement {
 		}
 		return form;
 	}
+	
 	private String goodsSalesInfo() {
 		String jsonData = null;
 		Sales sales = new Sales();

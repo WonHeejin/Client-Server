@@ -15,6 +15,30 @@ public class DataAccessObject extends webpos.DataAccessObject{
 	
 	ArrayList<Sales> getGoodsInfo(Connection con, Sales sales){
 		ArrayList<Sales> list= new ArrayList<Sales>();
+		String query="SELECT SUBSTR(MONTHLY,1,6) AS MONTHLY, SRCODE, SRNAME,GOCODE, SUM(AMOUNT) AS AMOUNT, SUM(GOCOST) AS GOCOST, SUM(PROFIT) AS PROFIT "
+				+ "FROM DBA_RUN.SALESINFO WHERE SUBSTR(MONTHLY,1,6)=TO_CHAR(SYSDATE,'YYYYMM') AND SRCODE=? "
+				+ "GROUP BY SUBSTR(MONTHLY,1,6),GOCODE, SRCODE,SRCODE, SRNAME";
+		try {
+			this.psmt=con.prepareStatement(query);
+			this.psmt.setNString(1, sales.getSeCode());
+			rs=this.psmt.executeQuery();
+			while(rs.next()) {
+				Sales s = new Sales();
+				s.setMonthly(rs.getNString("MONTHLY"));
+				s.setSeCode(rs.getNString("SRCODE"));
+				s.setSeName(rs.getNString("SRNAME"));
+				s.setGoCode(rs.getNString("GOCODE"));
+				s.setAmount(rs.getInt("AMOUNT"));
+				s.setGoCost(rs.getInt("GOCOST"));
+				s.setProfit(rs.getInt("PROFIT"));
+				list.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {if(rs.isClosed()) {rs.close();}} catch (SQLException e) {e.printStackTrace();}
+		}
+		
 		return list;
 	}
 	ArrayList<Sales> getSalesInfo(Connection con, Sales sales){

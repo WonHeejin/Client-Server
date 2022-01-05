@@ -1,76 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Sales</title>
 <script src="resources/resource.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/common.css"/>
-<style>
-	body {font-family: 'Gowun Dodum', sans-serif;}
-	#info {
-	width: 60%;
-	height: 25px;
-	line-height: 25px;
-	background-color: #81BA7B;
-	color: #3A3A3A;
-	font-size: 10pt;
-	text-align: right;
-	float: right;
-	padding: 0px 4px;
-}
-
-.btn {
-	width: 70px;
-	height: 20px;
-	background-color: #EAEAEA;
-	font-family: 'Gowun Dodum', sans-serif;
-	border: 0px;
-	color: #3A3A3A;
-	font-size: 12px;
-	cursor: pointer;
-}
-
-#infoLogo {
-	width: 100%;
-	height: 25px;
-	background: #81BA7B;
-}
-
-#logo {
-	padding: 0px 4px;
-	width: 20%;
-	height: 25px;
-	line-height: 25px;
-	background-color: #81BA7B;
-	color: #3A3A3A;
-	font-size: 10pt;
-	text-align: left;
-	font-weight: 800;
-	font-size: 15px;
-	float: left;
-}
-	#data {width:100%;height:570px;float:right;background-color: #EAEAEA;border:0px solid #EAEAEA;}
-	#footer {position:absolute; top:93%;width: 98.7%; height: 25px; line-height: 30px;
-		  background-color: #81BA7B; border:2px solid #81BA7B;
-		  color: #3A3A3A; font-size:12pt;
-		  text-align:right;}  
-</style>
+<script src="resources/sale.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/common.css" />
+<link rel="stylesheet" type="text/css" href="Sales.css" />
 </head>
 <body>
-	<div id="infoLogo">
-		<div id="logo">WEB POS</div>
-		<div id="info">
-			${accessInfo[0].sename}(${accessInfo[0].secode}) <span>${accessInfo[0].emName}(${accessInfo[0].emcode})</span>
-			최근 접속 일자 ${accessInfo[0].date} <span><input type="button"
-				class="btn"
-				onClick="accessOut('${accessInfo[0].secode}','${accessInfo[0].emcode}')"
-				value="로그아웃" /></span>
-		</div>
+	<div id="top">
+		${accessInfo[0].sename}(${accessInfo[0].secode}) <span>${accessInfo[0].emName}(${accessInfo[0].emcode})</span>
+		최근 접속 일자 ${accessInfo[0].date} <span><input type="button"
+			class="btn"
+			onClick="accessOut('${accessInfo[0].secode}','${accessInfo[0].emcode}')"
+			value="로그아웃" /></span>
 	</div>
-	<div id="data">
-		
+	<div id="main">
+		<div id="red1">
+			<div id="green1">
+				<div id="puple1">
+					<div id="listTop">
+						<div class="wtf1">No</div>
+						<div class="wtf2">상품명</div>
+						<div class="wtf3">수량</div>
+						<div class="wtf4">단가</div>
+						<div class="wtf5">금액</div>
+						<div class="wtf6">할인</div>
+					</div>
+					<div id="list"></div>
+					<div id="amount">합계</div>
+					<div id="price" >
+						<div style="float: left;width: 48%;height: 9.5%;" name="sum"></div>
+						<div style="float: left;width: 30%;height: 9.5%;" name="sum"></div>
+						<div style="float: left;width: 22%;height: 9.5%;" name="sum"></div>
+					</div>
+				</div>
+				<div id="puple2">
+					<div id="up">+</div>
+					<div id="down">-</div>
+					<div id="delete">삭제</div>
+				</div>
+			</div>
+			<div id="green2">
+				<div id=inputGoCode>
+					<input type="text" id="goCode" name="prCode" placeholder="상품코드" />
+					<input type="button" id="btn"
+						onClick="goodsInfoCtl()"
+						value="검색" />
+				</div>
+			</div>
+		</div>
+		<div id="red2">
+			<div id="green3">
+				<div class="inputCuCode">주문금액</div>
+				<div class="box"></div>
+				<div class="inputCuCode">할인금액</div>
+				<div class="box"></div>
+				<div class="inputCuCode">받을금액</div>
+				<div class="box"></div>
+				<div class="inputCuCode">고객코드입력</div>
+			</div>
+			<div id="green4">
+				<div id="pay">결제</div>
+				<div id="cancle">취소</div>
+			</div>
+		</div>
 	</div>
 	<div id="footer">made by jean</div>
 </body>

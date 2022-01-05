@@ -215,7 +215,7 @@
 					+"&goState="+encodeURIComponent(goState);
 		getAjaxData("ModGo",data);
 	}
-	function getAjaxJson(action,data,fn){
+	function getAjaxJson(action,data,fn){	
 		const ajax = new XMLHttpRequest();
 		ajax.onreadystatechange = function() {
 			if (ajax.readyState == 4 && ajax.status == 200) {
@@ -231,6 +231,7 @@
 		getAjaxJson("MSI",data,"toHTMLfromMSI");
 	}
 	function toHTMLfromMSI(jsonData){
+
 		let message="<table>";
 		message+="<tr>";
 		message+="<td>날짜</td><td>매장명</td><td>매출액</td><td>구매원가</td><td>순이익</td>";
@@ -262,7 +263,7 @@
 		const data="seCode="+encodeURIComponent(seCode);
 		getAjaxJson("GSI",data,"toHTMLfromGSI");
 	}
-	function toHTMLfromMSI(jsonData){
+	function toHTMLfromGSI(jsonData){
 		let message="<table>";
 		message+="<tr>";
 		message+="<td>날짜</td><td>매장명</td><td>상품코드</td><td>매출액</td><td>구매원가</td><td>순이익</td>";
