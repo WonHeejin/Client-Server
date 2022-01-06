@@ -39,9 +39,9 @@
 					</div>
 				</div>
 				<div id="puple2">
-					<div id="up">+</div>
-					<div id="down">-</div>
-					<div id="delete">삭제</div>
+					<div id="up" onClick="modQty(1,'list')">+</div>
+					<div id="down" onClick="modQty(-1,'list')">-</div>
+					<div id="delete" onClick="delBotton('list')">삭제</div>
 				</div>
 			</div>
 			<div id="green2">
@@ -65,7 +65,7 @@
 			</div>
 			<div id="green4">
 				<div id="pay">결제</div>
-				<div id="cancle">취소</div>
+				<div id="cancle" onClick="cancle()">취소</div>
 			</div>
 		</div>
 	</div>
