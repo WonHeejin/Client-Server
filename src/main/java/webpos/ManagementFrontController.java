@@ -1,4 +1,4 @@
-package service.managements;
+package webpos;
 
 import java.io.IOException;
 
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.ActionBeans;
+import service.managements.WebPosManagement;
 
 /**
  * Servlet implementation class ManagementFrontController

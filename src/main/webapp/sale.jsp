@@ -46,9 +46,9 @@
 			</div>
 			<div id="green2">
 				<div id=inputGoCode>
-					<input type="text" id="goCode" name="prCode" placeholder="상품코드" />
+					<input type="text" id="goCode" name="prCode" placeholder="상품코드 입력" />
 					<input type="button" id="btn"
-						onClick="goodsInfoCtl()"
+						onClick="goodsInfoCtl('getGocode','addGoods')"
 						value="검색" />
 				</div>
 			</div>

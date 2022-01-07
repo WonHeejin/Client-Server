@@ -44,7 +44,6 @@ public class AjaxController extends HttpServlet {
 		WebPosManagement wpm=null;
 		String ajaxData=null;
 		
-		
 		if(session.getAttribute("seCode")!=null) {
 			if(jobCode.equals("RegEmpForm")) {
 				wpm=new WebPosManagement(req);

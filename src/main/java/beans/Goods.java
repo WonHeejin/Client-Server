@@ -11,8 +11,18 @@ public class Goods {
 	private String goCaName;
 	private int goState;
 	private String goStName;
+	private int goQuantity;
 	
 	
+	
+	
+	
+	public int getGoQuantity() {
+		return goQuantity;
+	}
+	public void setGoQuantity(int goQuantity) {
+		this.goQuantity = goQuantity;
+	}
 	public String getGoStName() {
 		return goStName;
 	}
