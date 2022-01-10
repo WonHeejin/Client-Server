@@ -16,7 +16,7 @@ import service.sales.SalesManagement;
 /**
  * Servlet implementation class PosAjaxController
  */
-@WebServlet("/getGocode")
+@WebServlet({"/getGocode","/Orders"})
 public class PosAjaxController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -46,6 +46,9 @@ public class PosAjaxController extends HttpServlet {
 			if(jobCode.equals("getGocode")) {  
 				 SalesManagement smg= new SalesManagement(req);
 				 ajaxData=smg.backController("pos");
+			}else if(jobCode.equals("Orders")) {  
+				 SalesManagement smg= new SalesManagement(req);
+				 ajaxData=smg.backController("order");
 			}
 		}
 		res.setContentType("text/html;charset=utf-8");

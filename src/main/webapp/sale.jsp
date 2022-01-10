@@ -61,11 +61,14 @@
 				<div class="box"></div>
 				<div class="inputCuCode">받을금액</div>
 				<div class="box"></div>
-				<div class="inputCuCode">고객코드입력</div>
+				<div class="inputCuCode">
+				<input style="text-align:center;font-weight:800;font-size:20pt;border:#FFE400;background:#FFE400;width: 70%;height: 70%;
+				"type="text" name="cuCode" placeholder="고객코드"/>
+				</div>
 			</div>
 			<div id="green4">
-				<div id="pay">결제</div>
-				<div id="cancle" onClick="cancle()">취소</div>
+				<div id="pay" onClick="payment()">결제</div>
+				<div id="cancle" onClick="cancle('')">취소</div>
 			</div>
 		</div>
 	</div>
